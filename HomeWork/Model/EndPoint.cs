@@ -9,17 +9,17 @@ namespace HomeWork.Model
 {
     public class EndPoint
     {
+        public string serialNumber { get; set; }
+        public EMeterModel meterModel { get; set; }
+        public int meterNumber { get; set; }
+        public string firmwareVersion { get; set; }
+        public EState state { get; set; }
 
-        private string serialNumber { get; set; }
-        private EMeterModel meterModel { get; set; }
-        private string number { get; set; }
-        private string firmwareVersion { get; set; }
-        private EState state { get; set; }
-
-        public EndPoint(string serialNumber, EMeterModel meterModel, string firmwareVersion, EState state)
+        public EndPoint(string serialNumber, EMeterModel meterModel, int meterNumber, string firmwareVersion, EState state)
         {
             this.serialNumber = serialNumber;
             this.meterModel = meterModel;
+            this.meterNumber = meterNumber;
             this.firmwareVersion = firmwareVersion;
             this.state = state;
         }
