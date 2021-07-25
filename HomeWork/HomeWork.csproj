@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\EndPointController.cs" />
     <Compile Include="Enum\EMeterModel.cs" />
     <Compile Include="Enum\EState.cs" />
     <Compile Include="Model\EndPoint.cs" />

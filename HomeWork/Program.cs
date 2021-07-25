@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HomeWork.Controller;
 using HomeWork.Model;
-using HomeWork.Enum;
-using System.Linq;
 
 namespace HomeWork
 {
     class Program
     {
-
-        static List<EndPoint> listEndPoint = new List<EndPoint>();
+        private static EndPointController endPoint = new EndPointController();
 
         static void Main(string[] args)
         {
@@ -29,13 +27,13 @@ namespace HomeWork
                         insertEndPoint();
                         break;
                     case "2":
-                        Console.WriteLine("insert a new endpoint");
+                        editEndPoint();
                         break;
                     case "3":
                         deleleEndPoint();
                         break;
                     case "4":
-                        listAllEndPoint();
+                        showAllEndPoint();
                         break;
                     case "5":
                         searchEndPoint();
@@ -52,14 +50,12 @@ namespace HomeWork
                         Console.WriteLine("Invalid option! Try again!");
                         break;
                 }
-                if (exitApplication != true)
-                {
-                    userOption = printUserOptions();
-                }
+
 
             }
         }
 
+        #region "UserOptions"
         private static string printUserOptions()
         {
             Console.WriteLine();
@@ -73,80 +69,103 @@ namespace HomeWork
             Console.WriteLine();
             return Console.ReadLine();
         }
-
-        private static void insertEndPoint()
+        private static string askSerialNumber()
         {
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Insert the Serial Number");
-            string serialNumber = Console.ReadLine();
+            Console.WriteLine("Insert the Serial Number:");
+            return Console.ReadLine();
+
+        }
+
+        private static int askMeterModel()
+        {
             Console.WriteLine();
             Console.WriteLine("Select a Meter Model Bellow:");
             Console.WriteLine("* 16) NSX1PSW");
             Console.WriteLine("* 17) NSX1P13W");
             Console.WriteLine("* 18) NSX2P3W");
             Console.WriteLine("* 19) NSX3P4W");
+
             int meterModel = int.Parse(Console.ReadLine());
+
+            return meterModel;
+        }
+
+        private static int askMeterNumber()
+        {
             Console.WriteLine();
             Console.WriteLine("Insert the Meter's Number");
-            string meterNumber = Console.ReadLine();
+            return int.Parse(Console.ReadLine());
+        }
+
+        private static string askFirmwareVersion()
+        {
             Console.WriteLine();
             Console.WriteLine("Insert the Firmware Version");
-            string firmwareVersion = Console.ReadLine();
+            return Console.ReadLine();
+        }
+
+        private static int askState()
+        {
             Console.WriteLine();
             Console.WriteLine("Select a State Bellow:");
             Console.WriteLine("* 0) Disconnected");
             Console.WriteLine("* 1) Connected");
             Console.WriteLine("* 2) Armed");
-            int state = int.Parse(Console.ReadLine());
-
-            EndPoint newEndPoint = new EndPoint(serialNumber: serialNumber,
-                                             meterModel: (EMeterModel)meterModel,
-                                             meterNumber: Convert.ToInt32(meterNumber),
-                                             firmwareVersion: firmwareVersion,
-                                             state: (EState)state);
+            return int.Parse(Console.ReadLine());
+        }
+        #endregion
 
 
-            listEndPoint.Add(newEndPoint);
-            Console.WriteLine();
-            showAllEndPoint();
+        private static void insertEndPoint()
+        {
+            string serialNumber = askSerialNumber();
+            int meterModel = askMeterModel();
+            int meterNumber = askMeterNumber();
+            string firmwareVersion = askFirmwareVersion();
+            int state = askState();
+
+            endPoint.createEndPoint(serialNumber, meterModel, meterNumber, firmwareVersion, state);
+
+            endPoint.readEndPoint(null);
 
         }
-
-        private static void showAllEndPoint()
+        private static void editEndPoint()
         {
-            for (int i = 0; i < listEndPoint.Count; i++)
+            string serialNumber = askSerialNumber();
+            var item = endPoint.searchEndPoint(serialNumber);
+
+            if (item != null)
             {
-                EndPoint endPoint = listEndPoint[i];
-                Console.WriteLine(endPoint.serialNumber);
+                var state = askState();
+                endPoint.updateEndPoint(serialNumber, state);
+                endPoint.readEndPoint(null);
+            }
+            else
+            {
+                Console.Write("End Point Has not found");
             }
         }
-
-        private static EndPoint searchEndPoint()
+        public static void searchEndPoint()
         {
-            Console.WriteLine();
-            Console.WriteLine("Insert the Serial Number to find it");
-            string serialNumber = Console.ReadLine();
-
-            EndPoint endPoint = listEndPoint.Where(m => m.serialNumber == serialNumber).FirstOrDefault();
-
-            return endPoint;
+            string serialNumber = askSerialNumber();
+            endPoint.readEndPoint(serialNumber);
         }
-
-
+        private static void showAllEndPoint()
+        {
+            endPoint.readEndPoint(null);
+        }
         private static void deleleEndPoint()
         {
-            EndPoint endPoint = searchEndPoint();
+            string serialNumber = askSerialNumber();
 
-            if (endPoint != null)
+            if (endPoint.searchEndPoint(serialNumber) != null)
             {
                 Console.WriteLine("Would you like delete it? (Y/N)");
-                printEndPoint(endPoint);
                 string userOption = Console.ReadLine();
-
                 if (userOption.ToUpper() == "Y")
                 {
-                    Console.WriteLine("delete it");
+                    endPoint.deleleEndPoint(serialNumber);
                 }
             }
             else
@@ -155,31 +174,12 @@ namespace HomeWork
             }
         }
 
-        private static void printEndPoint(EndPoint endPoint)
+
+        private void printEndPoint(EndPoint endPoint)
         {
-            Console.WriteLine("SerialNumber:            Model:          Number:          Firmware:          State:");
-            Console.WriteLine("{0}                     {1}           {2}              {3}                {4}", endPoint.serialNumber, endPoint.meterModel, endPoint.meterNumber, endPoint.firmwareVersion, endPoint.state);
-            Console.WriteLine();
+            Console.WriteLine("SerialNumber:{0} Model:{1} Number:{2} Firmware:{3} State:{4}", endPoint.serialNumber, endPoint.meterModel, endPoint.meterNumber, endPoint.firmwareVersion, endPoint.state);
         }
 
-
-        private static void listAllEndPoint()
-        {
-            if (listEndPoint.Count() > 0)
-            {
-                Console.WriteLine("SerialNumber:            Model:          Number:          Firmware:          State:");
-                foreach (var endPoint in listEndPoint)
-                {
-                    Console.WriteLine("{0}                     {1}           {2}              {3}                {4}", endPoint.serialNumber, endPoint.meterModel, endPoint.meterNumber, endPoint.firmwareVersion, endPoint.state);
-                }
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("Any endPoint has founded");
-            }
-
-        }
 
 
 
