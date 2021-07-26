@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using HomeWork.Controller;
 using HomeWork.Enum;
-
+using HomeWork.Model;
 
 namespace HomeWork
 {
     class Program
     {
         private static EndPointController endPoint = new EndPointController();
-        private enum Enum{ };
+        
         static void Main(string[] args)
         {
             bool exitApplication = false;
@@ -58,7 +58,6 @@ namespace HomeWork
             }
         }
 
-        #region UserOptions
         private static string printUserOptions()
         {
             Console.WriteLine();
@@ -71,171 +70,19 @@ namespace HomeWork
             Console.WriteLine("* 6) Exit");
             Console.WriteLine();
             return Console.ReadLine();
-        }
-        private static string askSerialNumber()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Insert the Serial Number:");
-            return Console.ReadLine();
-
-        }
-        private static int askMeterModel()
-        {
-            string meterModel = "";
-            Console.WriteLine();
-            Console.WriteLine("Select a Meter Model Bellow:");
-            Console.WriteLine("* 16) NSX1PSW");
-            Console.WriteLine("* 17) NSX1P13W");
-            Console.WriteLine("* 18) NSX2P3W");
-            Console.WriteLine("* 19) NSX3P4W");
-            meterModel = Console.ReadLine();
-
-            while ((isInteger(meterModel) == false) || (isInMeterModelRange(meterModel)) == false)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Select a Meter Model Bellow:");
-                Console.WriteLine("* 16) NSX1PSW");
-                Console.WriteLine("* 17) NSX1P13W");
-                Console.WriteLine("* 18) NSX2P3W");
-                Console.WriteLine("* 19) NSX3P4W");
-                meterModel = Console.ReadLine();
-            }
-
-            return int.Parse(meterModel);
-        }
-        private static int askMeterNumber()
-        {
-
-            string meterNumber = "";
-            Console.WriteLine();
-            Console.WriteLine("Insert the Meter's Number");
-            meterNumber = Console.ReadLine();
-
-            while (isInteger(meterNumber) == false)
-            {
-                waitOperation();
-                Console.WriteLine();
-                Console.WriteLine("Insert the Meter's Number");
-                meterNumber = Console.ReadLine();
-
-            }
-            return int.Parse(meterNumber);
-        }
-        private static string askFirmwareVersion()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Insert the Firmware Version");
-            return Console.ReadLine();
-        }
-        private static int askState()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Select a State Bellow:");
-            Console.WriteLine("* 0) Disconnected");
-            Console.WriteLine("* 1) Connected");
-            Console.WriteLine("* 2) Armed");
-            string state = "";
-            state = Console.ReadLine();
-
-            while ((isInteger(state) == false) || (isInStateRange(state)) == false)
-            {
-                Console.WriteLine();
-                Console.WriteLine("Select a State Bellow:");
-                Console.WriteLine("* 0) Disconnected");
-                Console.WriteLine("* 1) Connected");
-                Console.WriteLine("* 2) Armed");
-                state = Console.ReadLine();
-            }
-
-            return int.Parse(state);
-        }
-        #endregion
-
-
-        #region Validation
-        private static bool isInteger(string number)
-        {
-            bool validation = true;
-            try
-            {
-                if (int.Parse(number) < 0)
-                {
-                    Console.Write("the value typed has invalid ({0})! Try again! ", number);
-                    validation = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message + ": ({0}) Try again! ", number);
-                validation = false;
-            }
-
-            return validation;
-
-        }
-
-        private static bool isInMeterModelRange(string number)
-        {
-            bool validation = false;
-            int result = 0;
-
-            var values = EMeterModel.GetValues(typeof(EMeterModel)).Cast<int>().OrderBy(x => x);
-
-            if (int.TryParse(number, out result)==true)
-            {
-                if ((result >= values.First()) && (result <= values.Last()))
-                {
-                    validation = true;                    
-                }
-                else
-                {
-                    Console.WriteLine("the value has out of range ({0})! Try Again!", result);
-                    waitOperation();
-                }
-
-            }
-
-            return validation;
-
-        }
-
-        private static bool isInStateRange(string number)
-        {
-            bool validation = false;
-            int result = 0;
-
-            var values = EState.GetValues(typeof(EState)).Cast<int>().OrderBy(x => x);
-
-            if (int.TryParse(number, out result) == true)
-            {
-                if ((result >= values.First()) && (result <= values.Last()))
-                {
-                    validation = true;
-                }
-                else
-                {
-                    Console.WriteLine("the value was out of range ({0})! Try Again!", result);
-                    waitOperation();
-                }
-
-            }
-
-            return validation;
-
-        }
-        #endregion
-
+        }     
         private static void insertEndPoint()
 
         {
-            string serialNumber = askSerialNumber();
+            string serialNumber = endPoint.askSerialNumber();
 
             if (endPoint.searchEndPoint(serialNumber) == null)
             {
-                int meterModel = askMeterModel();
-                int meterNumber = askMeterNumber();
-                string firmwareVersion = askFirmwareVersion();
-                int state = askState();
+                var meterModel = endPoint.askMeterModel();
+
+                int meterNumber = endPoint.askMeterNumber();
+                string firmwareVersion = endPoint.askFirmwareVersion();
+                var state = endPoint.askState();
 
                 endPoint.createEndPoint(serialNumber, meterModel, meterNumber, firmwareVersion, state);
 
@@ -252,13 +99,13 @@ namespace HomeWork
         }
         private static void editEndPoint()
         {
-            string serialNumber = askSerialNumber();
+            string serialNumber = endPoint.askSerialNumber();
             var item = endPoint.searchEndPoint(serialNumber);
 
             if (item != null)
             {
                 endPoint.readEndPoint(item.serialNumber);
-                var state = askState();
+                var state = endPoint.askState();
                 endPoint.updateEndPoint(serialNumber, state);
                 endPoint.readEndPoint(null);
             }
@@ -271,7 +118,7 @@ namespace HomeWork
         }
         public static void searchEndPoint()
         {
-            string serialNumber = askSerialNumber();
+            string serialNumber = endPoint.askSerialNumber();
             endPoint.readEndPoint(serialNumber);
             waitOperation();
             Console.Clear();
@@ -284,10 +131,11 @@ namespace HomeWork
         }
         private static void deleleEndPoint()
         {
-            string serialNumber = askSerialNumber();
+            string serialNumber = endPoint.askSerialNumber();
 
             if (endPoint.searchEndPoint(serialNumber) != null)
             {
+                endPoint.readEndPoint(serialNumber);
                 Console.WriteLine("Would you like delete it? (Y/N)");
                 string userOption = Console.ReadLine();
                 if (userOption.ToUpper() == "Y")
@@ -306,7 +154,7 @@ namespace HomeWork
         private static void waitOperation()
         {
             Console.WriteLine("Press any Key to continue");
-            string wait = Console.ReadLine();            
+            string wait = Console.ReadLine();
         }
 
     }

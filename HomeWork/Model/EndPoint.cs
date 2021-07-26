@@ -8,20 +8,79 @@ using HomeWork.Enum;
 namespace HomeWork.Model
 {
     public class EndPoint
+        
     {
-        public string serialNumber { get; set; }
-        public EMeterModel meterModel { get; set; }
-        public int meterNumber { get; set; }
-        public string firmwareVersion { get; set; }
-        public EState state { get; set; }
+        protected EMeterModel metermodel;
+        protected int meternumber;
+        protected EState state;
+        protected string serialnumber;
+        protected string firmwareversion;
 
-        public EndPoint(string serialNumber, EMeterModel meterModel, int meterNumber, string firmwareVersion, EState state)
-        {
-            this.serialNumber = serialNumber;
-            this.meterModel = meterModel;
-            this.meterNumber = meterNumber;
-            this.firmwareVersion = firmwareVersion;
-            this.state = state;
+        public string serialNumber {
+            get
+            {
+                return serialnumber;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                serialnumber = value;
+            }
         }
+        public EMeterModel meterModel {
+            get
+            {
+                return metermodel;
+            }
+            set
+            {
+                if (!EMeterModel.IsDefined(typeof(EMeterModel), value))
+                    throw new ArgumentOutOfRangeException();
+                metermodel = value;
+            }
+        }
+        public int meterNumber { 
+            get 
+            {
+                return meternumber;
+            } set
+            {
+                if (meternumber < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+            }
+
+        }
+        public string firmwareVersion {
+            get
+            {
+                return firmwareversion;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                firmwareversion = value;
+            }
+        }
+        public EState State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                if (!EState.IsDefined(typeof(EState), value))
+                    throw new ArgumentOutOfRangeException();
+                state = value;
+            }
+        }        
     }
 }
