@@ -52,7 +52,9 @@ namespace HomeWork.Model
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+                meternumber = value;
             }
+           
 
         }
         public string firmwareVersion {
