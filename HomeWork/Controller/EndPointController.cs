@@ -12,7 +12,7 @@ namespace HomeWork.Controller
 
     public interface IEndPoint
     {
-        void createEndPoint(string serialNumber, int MeterModel, int meterNumber, string firmwareVersion, int state);       
+        void createEndPoint(string serialNumber, int MeterModel, int meterNumber, string firmwareVersion, int state);
         EndPoint searchEndPoint(string serialNumber);
         void deleleEndPoint(string serialNumber);
         void readEndPoint(string serialNumber = null);
@@ -21,7 +21,7 @@ namespace HomeWork.Controller
 
     class EndPointController : IEndPoint
     {
-        static List<EndPoint> listEndPoint = new List<EndPoint>();        
+        static List<EndPoint> listEndPoint = new List<EndPoint>();
 
         public void createEndPoint(string serialNumber, int meterModel, int meterNumber, string firmwareVersion, int state)
         {
@@ -35,16 +35,22 @@ namespace HomeWork.Controller
         }
         public void readEndPoint(string serialNumber = null)
         {
-            if (listEndPoint.Count() > 0)
+            if (listEndPoint.Where(x => x.serialNumber == serialNumber || serialNumber == null).Count() > 0)
             {
                 foreach (var endPoint in listEndPoint.Where(x => x.serialNumber == serialNumber || serialNumber == null))
                 {
-                    printEndPoint(endPoint);
-                }               
+                    if (endPoint != null)
+                    {
+                        printEndPoint(endPoint);
+                    }
+                    else{
+                        Console.WriteLine("The EndPoint has not found ({0})", serialNumber);
+                    }
+                }
             }
             else
             {
-                Console.WriteLine("Any endPoint has found");
+                Console.WriteLine("Any End Point has found!!");
             }
 
         }
@@ -58,7 +64,7 @@ namespace HomeWork.Controller
             {
                 item.state = (EState)state;
             }
-        }        
+        }
         public EndPoint searchEndPoint(string serialNumber)
         {
             EndPoint endPoint = listEndPoint.Where(m => m.serialNumber == serialNumber).FirstOrDefault();
