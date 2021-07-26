@@ -127,7 +127,6 @@ namespace HomeWork.Controller
         {
             Console.WriteLine();
             Console.WriteLine("Insert the Meter's Number");
-
             try
             {
                 meterNumber = int.Parse(Console.ReadLine());

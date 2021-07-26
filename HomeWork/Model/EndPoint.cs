@@ -48,7 +48,7 @@ namespace HomeWork.Model
                 return meternumber;
             } set
             {
-                if (meternumber < 0)
+                if (value <= 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
