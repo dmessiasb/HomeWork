@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HomeWork.Model;
-using HomeWork.Enum;
+using HomeWork.Entities;
+
 
 namespace HomeWork.Test
 {
@@ -28,7 +28,7 @@ namespace HomeWork.Test
 
             endPoint.State = (EState)1;
 
-            var resultWaited = Enum.EState.Connected;
+            var resultWaited = EState.Connected;
 
             var resultNow = endPoint.State;
 
@@ -41,7 +41,7 @@ namespace HomeWork.Test
 
             endPoint.meterModel = (EMeterModel)17;
 
-            var resultWaited = Enum.EMeterModel.NSX1P13W;
+            var resultWaited = EMeterModel.NSX1P13W;
 
             var resultNow = endPoint.meterModel;
 

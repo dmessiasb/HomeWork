@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace HomeWork.Enum
+namespace HomeWork.Entities
 {
     public enum EMeterModel
     {

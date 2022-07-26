@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeWork.Enum
+namespace Domain
 {
-    public enum EState
+    class Program
     {
-        Disconnected = 0,
-        Connected = 1,
-        Armed = 2
-
+        static void Main(string[] args)
+        {
+        }
     }
 }

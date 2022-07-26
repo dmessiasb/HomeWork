@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HomeWork.Enum;
+using HomeWork.Entities;
 
-namespace HomeWork.Model
+namespace HomeWork.Entities
 {
     public class EndPoint
         
@@ -84,5 +84,7 @@ namespace HomeWork.Model
                 state = value;
             }
         }        
+
+
     }
 }
