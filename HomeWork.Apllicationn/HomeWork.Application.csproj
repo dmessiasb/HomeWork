@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IEndPoint.cs" />
-    <Compile Include="Services\EndPointController.cs" />
+    <Compile Include="Interfaces\IEndPointController.cs" />
+    <Compile Include="Application\EndPointController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

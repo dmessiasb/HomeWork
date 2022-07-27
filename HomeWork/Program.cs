@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HomeWork.Controller;
-using HomeWork.Interfaces;
+using HomeWork.Application;
 using HomeWork.Entities;
 
 
@@ -16,7 +15,7 @@ namespace HomeWork
     class Program
     {
 
-       static EndPointController _endPoint = new EndPointController();
+       static EndPointController endPoint = new EndPointController();
                 
         static void Main(string[] args)
         {
@@ -56,8 +55,6 @@ namespace HomeWork
                         Console.Clear();
                         break;
                 }
-
-
             }
         }
 
@@ -79,7 +76,7 @@ namespace HomeWork
         {
             string serialNumber = askSerialNumber();
 
-            if (_endPoint.search(serialNumber) == null)
+            if (endPoint.Search(serialNumber) == null)
             {
                 var meterModel = askMeterModel();
 
@@ -87,10 +84,10 @@ namespace HomeWork
                 string firmwareVersion = askFirmwareVersion();
                 var state = askState();
 
-                _endPoint.create(serialNumber, meterModel, meterNumber, firmwareVersion, state);
+                endPoint.Create(serialNumber, meterModel, meterNumber, firmwareVersion, state);
 
                 Console.WriteLine("the endPoint was successfully included!");
-                _endPoint.read(serialNumber);
+                endPoint.Read(serialNumber);
 
             }
             else
@@ -103,14 +100,14 @@ namespace HomeWork
         static void editEndPoint()
         {
             string serialNumber = askSerialNumber();
-            var item = _endPoint.search(serialNumber);
+            var item = endPoint.Search(serialNumber);
 
             if (item != null)
             {
-                _endPoint.read(item.serialNumber);
+                endPoint.Read(item.serialNumber);
                 var state = askState();
-                _endPoint.update(serialNumber, state);
-                _endPoint.read(null);
+                endPoint.Update(serialNumber, state);
+                endPoint.Read(null);
             }
             else
             {
@@ -122,13 +119,13 @@ namespace HomeWork
         static void searchEndPoint()
         {
             string serialNumber = askSerialNumber();
-            _endPoint.read(serialNumber);
+            endPoint.Read(serialNumber);
             waitOperation();
             Console.Clear();
         }
         static void showAllEndPoint()
         {
-            var listEndPoint = _endPoint.read();
+            var listEndPoint = endPoint.Read();
             printEndPoint(listEndPoint);
             waitOperation();
             Console.Clear();
@@ -137,14 +134,14 @@ namespace HomeWork
         {
             string serialNumber = askSerialNumber();
 
-            if (_endPoint.search(serialNumber) != null)
+            if (endPoint.Search(serialNumber) != null)
             {
-                _endPoint.read(serialNumber);
+                endPoint.Read(serialNumber);
                 Console.WriteLine("Would you like delete it? (Y/N)");
                 string userOption = Console.ReadLine();
                 if (userOption.ToUpper() == "Y")
                 {
-                    _endPoint.delete(serialNumber);
+                    endPoint.Delete(serialNumber);
                 }
             }
             else

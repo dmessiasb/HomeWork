@@ -60,9 +60,9 @@
       <Project>{15cd1f90-6632-4960-a552-f7d176197504}</Project>
       <Name>Homework.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HomeWork\HomeWork.csproj">
+    <ProjectReference Include="..\HomeWork\HomeWork.UI.csproj">
       <Project>{c6ce4677-be91-4dde-8fe2-b6231de97c22}</Project>
-      <Name>HomeWork</Name>
+      <Name>HomeWork.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

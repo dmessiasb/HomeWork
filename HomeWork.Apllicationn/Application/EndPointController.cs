@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 using HomeWork.Entities;
 using HomeWork.Interfaces;
 
-namespace HomeWork.Controller
+namespace HomeWork.Application
 {
 
-    public class EndPointController : IEndPoint
+    public class EndPointController : IEndPointController
     {
         internal static List<EndPoint> listEndPoint = new List<EndPoint>();
 
-        public void create(string serialNumber, EMeterModel meterModel, int meterNumber, string firmwareVersion, EState state)
+        public void Create(string serialNumber, EMeterModel meterModel, int meterNumber, string firmwareVersion, EState state)
         {
-
             EndPoint newEndPoint = new EndPoint();
             newEndPoint.serialNumber = serialNumber;
             newEndPoint.meterModel = meterModel;
@@ -24,29 +23,27 @@ namespace HomeWork.Controller
             newEndPoint.State = state;
 
             listEndPoint.Add(newEndPoint);
-
-
         }
-        public List<EndPoint> read(string serialNumber = null)
+        public List<EndPoint> Read(string serialNumber = null)
         {
             List<EndPoint> _listEndPoint = listEndPoint.Where(x => x.serialNumber == serialNumber || serialNumber == null).ToList();
 
             return _listEndPoint;
         }
-        public void delete(string serialNumber)
+        public void Delete(string serialNumber)
         {
             listEndPoint.RemoveAll(x => x.serialNumber == serialNumber);
         }
-        public void update(string serialNumber, EState state)
+        public void Update(string serialNumber, EState state)
         {
-            foreach (var item in listEndPoint.Where(x => x.serialNumber == serialNumber))
+            foreach (var endPoint in listEndPoint.Where(x => x.serialNumber == serialNumber))
             {
-                item.State = state;
+                endPoint.State = state;
             }
         }
-        public EndPoint search(string serialNumber)
+        public EndPoint Search(string serialNumber)
         {
-            EndPoint endPoint = read(serialNumber).FirstOrDefault();
+            EndPoint endPoint = Read(serialNumber).FirstOrDefault();
 
             return endPoint;
         }
