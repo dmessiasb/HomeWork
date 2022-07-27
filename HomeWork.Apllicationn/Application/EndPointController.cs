@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HomeWork.Entities;
+using HomeWork.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HomeWork.Entities;
-using HomeWork.Interfaces;
 
 namespace HomeWork.Application
 {

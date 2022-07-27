@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HomeWork.Entities;
 
 namespace HomeWork.Entities
 {
     public class EndPoint
-        
+
     {
         protected EMeterModel metermodel;
         protected int meternumber;
@@ -16,7 +11,8 @@ namespace HomeWork.Entities
         protected string serialnumber;
         protected string firmwareversion;
 
-        public string serialNumber {
+        public string serialNumber
+        {
             get
             {
                 return serialnumber;
@@ -30,7 +26,8 @@ namespace HomeWork.Entities
                 serialnumber = value;
             }
         }
-        public EMeterModel meterModel {
+        public EMeterModel meterModel
+        {
             get
             {
                 return metermodel;
@@ -42,11 +39,13 @@ namespace HomeWork.Entities
                 metermodel = value;
             }
         }
-        public int meterNumber { 
-            get 
+        public int meterNumber
+        {
+            get
             {
                 return meternumber;
-            } set
+            }
+            set
             {
                 if (value <= 0)
                 {
@@ -54,10 +53,11 @@ namespace HomeWork.Entities
                 }
                 meternumber = value;
             }
-           
+
 
         }
-        public string firmwareVersion {
+        public string firmwareVersion
+        {
             get
             {
                 return firmwareversion;
@@ -83,7 +83,7 @@ namespace HomeWork.Entities
                     throw new ArgumentOutOfRangeException();
                 state = value;
             }
-        }        
+        }
 
 
     }

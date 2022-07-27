@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace HomeWork.Entities
+﻿namespace HomeWork.Entities
 {
     public enum EMeterModel
     {

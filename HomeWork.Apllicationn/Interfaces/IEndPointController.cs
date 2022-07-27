@@ -1,10 +1,5 @@
-﻿using System;
+﻿using HomeWork.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HomeWork.Entities;
-using HomeWork.Application;
 
 namespace HomeWork.Interfaces
 {

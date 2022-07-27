@@ -1,6 +1,6 @@
-﻿using System;
+﻿using HomeWork.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HomeWork.Entities;
+using System;
 
 
 namespace HomeWork.Test
@@ -33,7 +33,7 @@ namespace HomeWork.Test
             var resultNow = endPoint.State;
 
             Assert.AreEqual(resultWaited, resultNow);
-        }    
+        }
         [TestMethod]
         public void MeterModel_PassedTrueValue_Return()
         {

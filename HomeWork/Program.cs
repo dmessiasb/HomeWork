@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HomeWork.Application;
+using HomeWork.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HomeWork.Application;
-using HomeWork.Entities;
 
 
 
@@ -15,8 +13,8 @@ namespace HomeWork.UI
     class Program
     {
 
-       static EndPointController endPoint = new EndPointController();
-                
+        static EndPointController endPoint = new EndPointController();
+
         static void Main(string[] args)
         {
             bool exitApplication = false;
@@ -159,7 +157,7 @@ namespace HomeWork.UI
         }
         static void printEndPoint(List<EndPoint> listEndPoint)
         {
-            if (listEndPoint.Count()>0)
+            if (listEndPoint.Count() > 0)
             {
                 foreach (var endPoint in listEndPoint)
                 {
