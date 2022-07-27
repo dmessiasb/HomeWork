@@ -8,7 +8,7 @@ using HomeWork.Entities;
 
 
 
-namespace HomeWork
+namespace HomeWork.UI
 {
 
 
