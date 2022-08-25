@@ -76,7 +76,7 @@ namespace HomeWork.UI
 
             if (endPoint.Search(serialNumber) == null)
             {
-                var meterModel = askMeterModel();
+                EMeterModel meterModel = askMeterModel();
 
                 int meterNumber = askMeterNumber();
                 string firmwareVersion = askFirmwareVersion();
@@ -202,7 +202,7 @@ namespace HomeWork.UI
             Console.WriteLine("* 19) NSX3P4W");
             try
             {
-                var meterModel = (EMeterModel)int.Parse(Console.ReadLine());
+                EMeterModel meterModel = (EMeterModel)int.Parse(Console.ReadLine());
                 return meterModel;
             }
             catch (ArgumentOutOfRangeException)
