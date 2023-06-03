@@ -61,9 +61,12 @@ namespace HomeWork.Controller
         }
         public void updateEndPoint(string serialNumber, EState state)
         {
-            foreach (var item in listEndPoint.Where(x => x.serialNumber == serialNumber))
+            if (!string.IsNullOrWhiteSpace(serialNumber))
             {
-                item.State = state;
+                foreach (var item in listEndPoint.Where(x => x.serialNumber == serialNumber))
+                {
+                    item.State = state;
+                }
             }
         }
         public EndPoint searchEndPoint(string serialNumber)
